@@ -14,7 +14,7 @@ import "../css/globals.css";
 // });
 
 export const metadata: Metadata = {
-  title: "to-do list",
+  title: "To Do List",
   description: "Simple to do list app",
 };
 
