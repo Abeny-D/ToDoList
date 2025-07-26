@@ -17,10 +17,8 @@ const AddTask = () => {
      e.preventDefault();
       await addTodo({
           id: uuidv4(),
-          description: newTextValue,
-          name: "Test"
+          name: newTextValue,
       })
-        setNewTextValue("")
         setModalOpen(false)
         router.refresh()
     }

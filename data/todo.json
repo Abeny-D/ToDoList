@@ -1,76 +1,10 @@
 {
   "data": [
     {
-      "id": "1",
-      "name": "I want to do something",
-      "description": "N/A"
-    },
-    {
-      "id": "2",
-      "name": "I want to do nothing",
-      "description": "N/A"
-    },
-    {
-      "id": "3",
-      "name": "This is just to demonstrate how to do a todo list",
-      "description": "N/A"
-    },
-    {
-      "id": "4",
-      "name": "Show case",
-      "description": "N/A"
-    },
-    {
-      "id": "5",
-      "description": "todo",
-      "name": "Test"
-    },
-    {
-      "id": "eb05",
+      "id": "b485",
       "data": {
-        "id": "9",
-        "description": "todo",
-        "name": "Test"
-      }
-    },
-    {
-      "id": "5002",
-      "data": {
-        "id": "9",
-        "description": "Test",
-        "name": "Test"
-      }
-    },
-    {
-      "id": "7bfb",
-      "data": {
-        "id": "9",
-        "description": "fghgfhf",
-        "name": "Test"
-      }
-    },
-    {
-      "id": "34c6",
-      "data": {
-        "id": "9",
-        "description": "This is just a text to display",
-        "name": "Test"
-      }
-    },
-    {
-      "id": "7451",
-      "data": {
-        "id": "d713f374-42f2-433e-92df-f7aecf65e200",
-        "description": "newID",
-        "name": "Test"
-      }
-    },
-    {
-      "id": "8f94",
-      "data": {
-        "id": "12bcd960-7d77-4bd1-b9cc-00ea7886cbe3",
-        "description": "Test",
-        "name": "Test"
+        "id": "df5271ef-4b82-4249-8441-04fa7ea6d863",
+        "name": "Hey there"
       }
     }
   ]
