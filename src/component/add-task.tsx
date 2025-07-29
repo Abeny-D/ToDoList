@@ -15,12 +15,11 @@ const AddTask = () => {
 
     const addNewValue: FormEventHandler<HTMLFormElement> = async (e) => {
      e.preventDefault();
-      await addTodo({
-          id: uuidv4(),
-          name: newTextValue,
-      })
+      await addTodo({ id: uuidv4(), name: newTextValue })
+
         setModalOpen(false)
         router.refresh()
+        setNewTextValue('')
     }
     return (
         <div>

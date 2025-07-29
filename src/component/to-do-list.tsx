@@ -6,35 +6,56 @@ import {FaEdit} from "react-icons/fa";
 import {FaTrashAlt} from "react-icons/fa";
 import Modal from "@/component/modal";
 import {useRouter} from "next/navigation";
-import {deleteToDo, editToDo} from "@@/api";
+import {addTodo, deleteToDo, editToDo} from "@@/api";
+import {v4 as uuidv4} from "uuid";
 
 
-export interface taskProps {
+export interface todoListTask {
     tasks: ITask[];
 }
 
-const ToDoList: React.FC<taskProps> = ({tasks}) => {
-     const router = useRouter()
-    const [editModal, setEditModal] = useState<boolean>(false);
+
+const ToDoList: React.FC<todoListTask> = ({tasks}) => {
+    const router = useRouter()
+    const [openEditModal, setOpenEditModal] = useState<boolean>(false);
     const [deleteModal, setDeleteModal] = useState<boolean>(false);
-    const [newValue, setNewValue] = useState(tasks[0]?.name ?? '');
+
+
+    const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+    const selectedTask = tasks.find(task => task.id === selectedTaskId);
+    const [editTask, setEditTask] = useState<string>("");
+    const [taskIdToDelete, setTaskIdToDelete] = useState<string | null>(null);
+
+
+    const handleEditClick = (taskId: string, currentName: string) => {
+        setSelectedTaskId(taskId);
+        setEditTask(currentName);
+        setOpenEditModal(true);
+    };
+
 
     const editValueOfText: FormEventHandler<HTMLFormElement> = async (e) => {
-       e.preventDefault()
-       await editToDo({
-           id: tasks[0].id,
-            name: newValue
-       })
-        setNewValue("")
-        setEditModal(false)
+        e.preventDefault();
+        await editToDo({id: selectedTaskId!, name: editTask})
+
+        setEditTask("")
+        setOpenEditModal(false)
         router.refresh()
+        handleModalClose()
     }
 
-    const handelDelete  = async (id:string) => {
+    const handleModalClose = () => {
+        setSelectedTaskId(null);
+        setEditTask("");
+        setOpenEditModal(false);
+    };
 
-        await deleteToDo(id);
-        setDeleteModal(false);
+    const handelDelete = async (id: string) => {
+
+        await deleteToDo(id)
+        setDeleteModal(false)
         router.refresh()
+
     }
 
     return (
@@ -52,16 +73,19 @@ const ToDoList: React.FC<taskProps> = ({tasks}) => {
                 {tasks.map((task: ITask) => (
 
                     <tr key={task.id} className="hover:bg-base-300">
-                        <td className="w-full">{task.name}</td>
+                        <td className="w-full">{task.todo.name}</td>
                         <td className="flex gap-4">
-                            <FaEdit onClick={()=> setEditModal(true)} size={20} className="text-blue-400"/>
-                            <Modal modalOpen={editModal} setModalOpen={setEditModal}>
-                                <form onSubmit={editValueOfText}>
+                            <FaEdit onClick={() => handleEditClick(task.id, task.todo.name)} size={20}
+                                    className="text-blue-400"/>
+                            <Modal modalOpen={openEditModal} setModalOpen={setOpenEditModal}>
+                                <form onSubmit={(event) => {
+                                    editValueOfText(event)
+                                }}>
                                     <h1 className="font-bold text-lg">Edit Task</h1>
                                     <div className="modal-action">
                                         <input
-                                            value={newValue}
-                                            onChange={(e) => setNewValue(e.target.value)}
+                                            value={editTask}
+                                            onChange={(e) => setEditTask(e.target.value)}
                                             type="text"
                                             placeholder="type and submit to edit task"
                                             className="input input-bordered w-full"/>
@@ -70,12 +94,16 @@ const ToDoList: React.FC<taskProps> = ({tasks}) => {
                                 </form>
 
                             </Modal>
-                            <FaTrashAlt size={20} className="text-red-400" onClick={()=>setDeleteModal(true)} />
+                            <FaTrashAlt size={20} className="text-red-400" onClick={() => {
+                                setTaskIdToDelete(task.id);
+                                setDeleteModal(true);
+                            }}/>
                             <Modal modalOpen={deleteModal} setModalOpen={setDeleteModal}>
                                 <h1 className="text-center">Are you sure you want to delete</h1>
                                 <div className="modal-action">
-                                    <button className="btn btn-error" onClick={()=>handelDelete(task.id)}>Yes</button>
-                                    <button className="btn btn-primary" onClick={()=>setDeleteModal(false)}>No</button>
+                                    <button className="btn btn-error" onClick={() => handelDelete(taskIdToDelete!)}>Yes</button>
+                                    <button className="btn btn-primary" onClick={() => setDeleteModal(false)}>No
+                                    </button>
                                 </div>
                             </Modal>
                         </td>

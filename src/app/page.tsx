@@ -5,7 +5,7 @@ import {getAllTodos} from "@@/api"
 
 export default async function Home() {
 
-    const todoList = await getAllTodos();
+    const tasks = await getAllTodos();
 
   return (
     <div className="max-w-4xl mx-auto mt-4">
@@ -13,7 +13,7 @@ export default async function Home() {
       <h1 className="text-2xl font-bold">To Do List</h1>
         <AddTask />
       </div>
-        <ToDoList tasks={todoList} />
+        <ToDoList tasks={tasks} />
     </div>
   );
 }
